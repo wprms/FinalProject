@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.global.friend.mapper.ChatMapper">
+
+	<resultMap id="chatListMap" type="ChatListVO">
+		<result property="chatno" column="chatno" />
+		<result property="custno" column="custno" />
+		<result property="recentMsg" column="recentMsg" />
+		<result property="partnername" column="partnername" />
+	</resultMap>
+
+	<resultMap id="chatMap" type="ChatVO">
+		<result property="chatno" column="chatno" />
+		<result property="custno" column="custno" />
+		<result property="msg" column="msg" />
+		<result property="chattime" column="chattime" />
+		<result property="msgno" column="msgno" />
+	</resultMap>
+	
+	<!-- 메시지 추가 -->
+	<insert id="addMsg" parameterType="map">
+	<![CDATA[
+	INSERT INTO CHAT (chatno, custno, msg, chattime, msgno) VALUES (#{chatno},#{custno},#{msg},SYSDATE,1)
+ 	]]>
+	</insert>
+	
+	<!-- 메시지 조회 -->
+	<select id="getMsg" resultType="chatVO">
+	<![CDATA[
+		SELECT * FROM CHAT WHERE chatno = #{chatno} AND msgno > #{msgno} ORDER BY chattime ASC
+	]]>
+	</select>
+	
+	<!-- recentmsg 변경-->
+	<update id="recentMsg"  parameterType="map"> 
+    <![CDATA[
+       update CHATLIST set recentmsg=#{msg} where chatno =#{chatno}
+     ]]>
+	</update>
+	
+	
+	<resultMap id="imgMap" type="ImgVO">
+		<result property="custno" column="custno" />
+		<result property="imgname1" column="imgname1" />
+		<result property="imgname2" column="imgname2" />
+		<result property="imgname3" column="imgname3" />
+		<result property="imgname4" column="imgname4" />
+		<result property="imgname5" column="imgname5" />
+		<result property="imgname6" column="imgname6" />
+	</resultMap> 
+
+   <resultMap id="userMap" type="UserVO">
+      <id property="custno" column="custno" />
+      <result property="custid" column="custid" />
+      <result property="custpw" column="custpw" />
+      <result property="custemail" column="custemail" />
+      <result property="custname" column="custname" />
+      <result property="custbirth" column="custbirth" />
+      <result property="custloc" column="custloc" />
+      <result property="custrank" column="custrank" />
+      <result property="custduration" column="custduration" />
+      <result property="custage" column="custage" />
+      <result property="sex" column="sex" />
+      <collection property="imgList" resultMap="imgMap" />
+   </resultMap>
+	
+	
+	<!-- 채팅리스트 생성 -->
+	<insert id="addChatList" parameterType="map">
+	<![CDATA[
+		INSERT ALL INTO CHATLIST VALUES(CHATLIST_seq.NEXTVAL,#{custno},'채팅을 시작해주세요.',#{partnername}) INTO CHATLIST VALUES(CHATLIST_seq.NEXTVAL,#{partnerno},'채팅을 시작해주세요.',#{custname}) SELECT * FROM DUAL
+	]]>
+	</insert>
+	
+	<!-- 채팅리스트 조회 -->
+	<select id="getChatList" resultType="chatListVO">
+	<![CDATA[
+		SELECT * FROM CHATLIST WHERE custno = #{custno}	ORDER BY chatno ASC
+	]]>
+	</select>
+	
+	<!-- Like리스트 조회 -->
+	<select id="getLikeList" resultMap="userMap">
+	<![CDATA[
+		SELECT U.CUSTNO,U.CUSTNAME, custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+       END AS custage, I.IMGNAME1 FROM USERS U,IMGS I WHERE U.CUSTNO = I.USERS_CUSTNO AND U.CUSTNO in ( SELECT partnerno from likes where users_custno = #{custno}) 
+	]]>
+	</select>
+	
+	<!-- LikeRe리스트 조회 -->
+	<select id="getLikeListRe" resultMap="userMap">
+	<![CDATA[
+		SELECT U.CUSTNO,U.CUSTNAME, custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+       END AS custage, I.IMGNAME1 FROM USERS U,IMGS I WHERE U.CUSTNO = I.USERS_CUSTNO AND U.CUSTNO in ( SELECT users_custno from likes where partnerno = #{custno}) 
+	]]>
+	</select>
+	
+	<!-- Like리스트 삭제 -->
+	<delete id="deleteLikeList">
+	<![CDATA[
+		delete from likes where users_custno = #{custno} and partnerno = #{partnerno}
+	]]>
+	</delete>
+	
+	<!-- Like리스트 삭제 -->
+	<delete id="deleteLikeListRe">
+	<![CDATA[
+		delete from likes where users_custno = #{partnerno} and partnerno = #{custno}
+	]]>
+	</delete>
+
+	<resultMap id="optionMap" type="OptionVO">
+		<result property="custno" column="custno" />
+		<result property="zodiac" column="zodiac" />
+		<result property="mbti" column="mbti" />
+		<result property="sns" column="sns" />
+		<result property="edu" column="edu" />
+		<result property="height" column="height" />
+		<result property="job" column="job" />
+	</resultMap>
+
+	<resultMap id="profileResultMap" type="ProfileVO">
+		<result property="custno" column="custno" />
+		<result property="custname" column="custname" />
+		<result property="custrank" column="custrank" />
+		<result property="custbirth" column="custbirth" />
+		<result property="custage" column="custage" />
+		<result property="custloc" column="custloc" />
+		<result property="zodiac" column="zodiac" />
+		<result property="mbti" column="mbti" />
+		<result property="sns" column="sns" />
+		<result property="imgname1" column="imgname1" />
+		<collection property="imgList" resultMap="imgMap" />
+		<collection property="userList" resultMap="userMap" />
+		<collection property="optionList" resultMap="optionMap" />
+	</resultMap>
+	
+	<select id="getProfile" resultMap="profileResultMap">
+	<![CDATA[
+	SELECT u.custno, u.custname, u.custrank, u.custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+       END AS custage, o.zodiac, o.mbti, o.sns, o.job, im.imgname1
+	FROM users u
+	INNER JOIN options o ON u.custno = o.users_custno
+	INNER JOIN interests i ON u.custno = i.users_custno
+	INNER JOIN imgs im ON u.custno = im.users_custno
+	WHERE u.custno = #{custno}
+]]>
+</select>
+
+</mapper>

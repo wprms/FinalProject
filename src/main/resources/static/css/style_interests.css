@@ -1,0 +1,29 @@
+@charset 'UTF-8';
+
+
+#interests {
+	margin:10px auto;
+	width:100%;
+	height:500px;
+	padding:20px;
+}
+
+#interests optgroup{
+	display:block;
+	clear:both;
+	font-size:1.5em;
+	padding:0 10px;
+}
+
+
+#interests option{
+	float:left;
+	border:1px solid #EEE;
+	border-radius:3px;
+	margin-right:5px;
+	width:24%;
+	text-align:center;
+	font-size:16px;
+	padding:5px;
+	margin-bottom:10px;
+}

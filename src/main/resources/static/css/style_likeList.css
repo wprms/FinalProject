@@ -1,0 +1,471 @@
+
+@charset 'UTF-8';
+
+* {
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+}
+
+a {
+   color: #333;
+}
+
+a:hover {
+   color: inherit;
+   text-decoration: none;
+}
+
+ul {
+   list-style: none;
+}
+
+body {
+   width: 100vw;
+   height: 100vh;
+}
+
+header, main, footer {
+   width: 100%;
+}
+
+h3 {
+   text-align: center;
+   line-height: inherit;
+}
+
+/*****************************************/
+aside {
+   width: 300px;
+   height: 100%;
+   float: left;
+}
+
+.wrap {
+   width: calc(100% - 300px);
+   float: right;
+}
+
+/*****************************************/
+header {
+	width: 100%;
+	height: 50px;
+	position: relative;
+	text-align: center;
+}
+
+header h1 {
+	text-align: center;
+	height: 100%;
+	line-height: 50px;
+}
+
+i {
+	padding-top: 10px;
+	color: #57abff;
+}
+
+header nav {
+	position: absolute;
+	right: 0;
+	top: 10px;
+}
+
+header nav ul li {
+	float: left;
+	font-size: 1.3em;
+}
+
+.dropmenu {
+	cursor: pointer;
+	float: left;
+	padding: 0px;
+}
+
+.dropmenu ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.dropmenu li {
+	float: left;
+	padding: 0px;
+}
+
+#current {
+	margin-right: 50px;
+}
+
+.dropmenu li a {
+	display: block;
+	margin: 0px;
+	line-height: 50px;
+	padding: 0px 25px;
+	text-align: center;
+	text-decoration: none;
+}
+
+.dropmenu li a:hover, .dropmenu ul li:hover a {
+	text-decoration: none;
+}
+
+.dropmenu li ul {
+	display: none;
+	height: auto;
+	border: 0px;
+	position: absolute;
+	width: 150px;
+	z-index: 100;
+	/*top:1em;
+/*left:0;*/
+}
+
+.dropmenu li:hover ul {
+	display: block;
+}
+
+.dropmenu li li {
+	display: block;
+	float: none;
+	margin: 0px;
+	padding: 0px;
+	width: 100px;
+}
+
+.dropmenu li:hover li a {
+	background: none;
+}
+
+.dropmenu li ul a {
+	display: block;
+	height: 50px;
+	line-height: 50px;
+	font-size: 14px;
+	margin: 0px;
+	padding: 0px 10px 0px 15px;
+	text-align: left;
+}
+
+.dropmenu li ul a:hover, .dropmenu li ul li:hover a {
+	border: 0px;
+	color: #57abff;
+	text-decoration: none;
+}
+
+.dropmenu p {
+	clear: left;
+}
+/*****************************************/
+.content {
+   width: 100%;
+   height: calc(100% - 50px);
+   padding: 20px;
+}
+
+.content article {
+   width: 80%;
+   margin: 20px auto;
+}
+/*****************************************/
+.content article .col {
+   height: 320px;
+   background: #FFF;
+   border: 1px solid #EEE;
+   margin-bottom: 40px;
+   border-radius: 10px;
+}
+
+.content article .col:nth-child(2) {
+   margin: 0 50px;
+}
+
+.content article .col:hover img {
+   opacity: 0.7;
+}
+
+.btn_div {
+   text-align: center;
+   height: 40px;
+   line-height: 40px;
+}
+
+.btn-chat {
+   width: 100px;
+   height: 40px;
+   color: white; border-radius : 5px;
+   background-color: #ff53b6;
+   border: none;
+   transition: all 0.2s;
+   border-radius: 5px;
+}
+
+.btn-chat:hover {
+  background: #ff37aa;
+   transform: scale(1.05);
+   border: none;
+}
+
+.btn-more {
+   width: 100px;
+   height: 40px;
+   color: white; border-radius : 5px;
+   background-color: #ff53b6;
+   border: none;
+   transition: all 0.2s;
+   border-radius: 5px;
+}
+
+.btn-more:hover {
+   background: #ff37aa;
+   transform: scale(1.05);
+   border: none;
+}
+
+/*=============목록부분=============*/
+.row {
+   height: 600px;
+}
+
+.product-image-wrapper {
+   border: 1px solid #57abff;
+   overflow: hidden;
+   height: 380px;
+   border-radius: 10px;
+   margin-bottom: 20px;
+   margin-top: 10px;
+}
+
+
+.single-products {
+   position: relative;
+   height: 320px;
+   cursor: pointer;
+   
+}
+
+.productinfo h2 {
+   color: #57abff;
+   font-size: 24px;
+   font-weight: 700;
+   margin-top: 220px;
+
+}
+
+.product-overlay h2 {
+   color: #fff;
+   font-size: 24px;
+   font-weight: 700;
+}
+
+.productinfo p {
+   font-size: 14px;
+   font-weight: 400;
+   color: #696763;
+   margin-bottom: 100px;
+}
+
+.productinfo img {
+   width: 400px;
+   object-fit: cover;
+}
+
+.productinfo {
+   position: relative;
+}
+
+.product-overlay {
+   background: #57abff;;
+   opacity: 80%; 
+   top : 0;
+   display: none;
+   height: 0;
+   position: absolute;
+   -webkit-transition: height 500ms ease 0s;
+   transition: height 500ms ease 0s;
+   width: 100%;
+   display: block;
+   top: 0;
+}
+
+.single-products:hover .product-overlay {
+   display: block;
+   height: 118%;
+}
+
+.product-overlay .overlay-content {
+   bottom: 0;
+   position: absolute;
+   bottom: 0;
+   text-align: center;
+   width: 100%;
+}
+
+.product-overlay .add-to-cart {
+   background: #fff;
+   border: 0 none;
+   border-radius: 5px;
+   color: #57abff;
+   font-size: 15px;
+   margin-bottom: 20px;
+}
+
+.product-overlay .add-to-cart:hover {
+   background: #fff;
+   color: #57abff;
+   border-radius: 5px;
+   font-weight:bold;
+}
+
+.product-overlay p {
+   font-size: 14px;
+   font-weight: 400;
+   color: #fff;
+}
+
+.add-to-cart {
+   background: #F5F5ED;
+   border: 0 none;
+   border-radius: 0;
+   color: #696763;
+   font-size: 15px;
+   margin-bottom: 10px;
+}
+
+.add-to-cart:hover {
+   background: #57abff;
+   border: 0 none;
+   border-radius: 0;
+   color: #FFFFFF;
+}
+
+.add-to {
+   margin-bottom: 30px;
+}
+
+.add-to-cart i {
+   margin-right: 5px;
+}
+
+.add-to-cart:hover {
+   background: #57abff;
+   color: #FFFFFF;
+}
+
+.choose {
+   padding-left: 145px;
+   margin-bottom:20px;
+}
+
+.choose ul li a {
+   color: #B3AFA8;
+   font-size: 13px;
+   padding-left: 15px;
+   padding-right: 15px;
+}
+
+.choose ul li a i {
+   margin-right: 5px;
+}
+
+.choose ul li a:hover {
+   background: none;
+   color: #57abff;
+}
+
+/*****************************************/
+aside {
+   position: fixed;
+   left: 0;
+   background: #c8e3ff;
+}
+
+.user_profile {
+   width: 100%;
+   height: 150px;
+   padding: 20px;
+   margin-left: 20px;
+}
+
+.user_profile i {
+   color: #80adf9;
+}
+
+.user_profile a {
+   display: block;
+   padding-left: 10px;
+   
+}
+
+.user_profile h4 {
+   display: inline-block;
+   font-size: 1.8em;
+   height:58px;
+   padding-left: 10px;
+   
+}
+
+/*****************************************/
+.chat_list {
+   padding: 20px;
+}
+
+.chat_list li {
+   margin-bottom: 20px;
+}
+
+.chat_list i{
+   color: #ff84c1;
+}
+
+.chat_list a {
+   display: block;
+   width: 100%;
+   height: 100%;
+}
+
+.chat_list .partner_name {
+   display: inline-block;
+   margin-left: 10px;
+   width: calc(100% - 80px);
+   font-size: 1.2em;
+   font-weight: bold;
+}
+
+.chat_list .recent_msg {
+   margin: 0 auto;
+   margin-top: 10px;
+   padding: 5px;
+   display: block;
+   background: #ffffff;
+   border-radius: 10px;
+   box-sizing: content-box;
+}
+
+/*****************************************/
+.footer {
+   position: fixed;
+   bottom: 0;
+   width: 300px;
+   height: 70px;
+}
+
+.footer ul {
+   margin: 15px auto;
+   width: calc(100% - 30px);
+   height: 40px;
+}
+
+.footer  ul li {
+   width: 32%;
+   margin-right: 2%;
+   float: left;
+   text-align: center;
+   line-height: 40px;
+   padding: 0 5px;
+}
+
+.footer ul li:last-child {
+   margin: 0;
+
+}

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.global.friend.mapper.UserMapper">
+	<resultMap id="userMap" type="UserVO">
+		<id property="custno" column="custno" />
+		<result property="custid" column="custid" />
+		<result property="custpw" column="custpw" />
+		<result property="custemail" column="custemail" />
+		<result property="custname" column="custname" />
+		<result property="custbirth" column="custbirth" />
+		<result property="custloc" column="custloc" />
+		<result property="custrank" column="custrank" />
+		<result property="custduration" column="custduration" />
+		<result property="sex" column="sex" />
+		<collection property="authList" resultMap="authMap"/>
+	</resultMap>	
+		
+	<resultMap id="authMap" type="AuthVO">
+		<result property="users_custno" column="custno" />
+		<result property="auth" column="auth" />
+	</resultMap>
+
+
+	<resultMap id="optionMap" type="OptionVO">
+		<result property="custno" column="custno" />
+		<result property="zodiac" column="zodiac" />
+		<result property="mbti" column="mbti" />
+		<result property="sns" column="sns" />
+		<result property="edu" column="edu" />
+		<result property="height" column="height" />
+		<result property="job" column="job" />
+	</resultMap>
+
+	<resultMap id="interestMap" type="InterestVO">
+		<result property="users_custno" column="custno" />
+		<result property="music" column="music" />
+		<result property="exercise" column="exercise" />
+		<result property="pet" column="pet" />
+		<result property="travel" column="travel" />
+		<result property="book" column="book" />
+		<result property="religion" column="religion" />
+		<result property="fashion" column="fashion" />
+		<result property="study" column="study" />
+		<result property="food" column="food" />
+		<result property="drink" column="drink" />
+		<result property="smoke" column="smoke" />
+		<result property="lifestyle" column="lifestyle" />
+	</resultMap>
+
+	<resultMap id="imgMap" type="ImgVO">
+		<result property="custno" column="custno" />
+		<result property="imgname1" column="imgname1" />
+		<result property="imgname2" column="imgname2" />
+		<result property="imgname3" column="imgname3" />
+		<result property="imgname4" column="imgname4" />
+		<result property="imgname5" column="imgname5" />
+		<result property="imgname6" column="imgname6" />
+	</resultMap> 
+	
+	<resultMap id="profileResultMap" type="ProfileVO">
+		<result property="custno" column="custno" />
+		<result property="custname" column="custname" />
+		<result property="custrank" column="custrank" />
+		<result property="custbirth" column="custbirth" />
+		<result property="custage" column="custage" />
+		<result property="custloc" column="custloc" />
+		<result property="zodiac" column="zodiac" />
+		<result property="mbti" column="mbti" />
+		<result property="sns" column="sns" />
+		<result property="imgname1" column="imgname1" />
+		<collection property="imgList" resultMap="imgMap" />
+		<collection property="userList" resultMap="userMap" />
+		<collection property="optionList" resultMap="optionMap" />
+	</resultMap>
+			
+	<select id="selectUserById" resultMap="userMap">
+    <![CDATA[
+       SELECT * FROM users a,authorities b WHERE a.custid = #{custid} and a.custno = b.users_custno
+      ]]>
+	</select>
+	
+	<insert id="insertUser">
+  	<![CDATA[
+    	insert into users values (custno_sequence.nextval, #{custid}, #{custpw}, #{custemail}, #{custname}, #{custbirth}, #{custloc}, '일반', null, #{sex})
+ 	]]>
+	</insert>
+
+	<insert id="insertOption">
+  	<![CDATA[
+    	insert into options values (custno_sequence.currval, #{zodiac, jdbcType=VARCHAR}, #{mbti, jdbcType=VARCHAR}, #{sns, jdbcType=VARCHAR}, #{edu, jdbcType=VARCHAR}, #{height, jdbcType=VARCHAR}, #{job, jdbcType=VARCHAR})
+ 	]]>
+	</insert>
+
+	<insert id="insertInterest">
+  	<![CDATA[
+    	insert into interests values(custno_sequence.currval, #{music, jdbcType=VARCHAR}, #{exercise, jdbcType=VARCHAR}, #{pet, jdbcType=VARCHAR}, #{travel, jdbcType=VARCHAR}, #{book, jdbcType=VARCHAR}, #{religion, jdbcType=VARCHAR}, #{fashion, jdbcType=VARCHAR}, #{study, jdbcType=VARCHAR}, #{food, jdbcType=VARCHAR}, #{drink, jdbcType=VARCHAR}, #{smoke, jdbcType=VARCHAR}, #{lifestyle, jdbcType=VARCHAR})
+ 	]]>
+	</insert>
+
+	<insert id="insertAuthorities">
+  	<![CDATA[
+    	insert into authorities values(custno_sequence.currval,'ROLE_USER')
+ 	]]>
+	</insert>
+
+	<select id="getUser" resultMap="userMap" parameterType="String">
+    <![CDATA[
+  	 SELECT * FROM users JOIN authorities ON users.custno = authorities.users_custno WHERE users.custid =#{custid}
+      ]]>
+	</select>
+
+	<insert id="insertCustImage">
+	<![CDATA[
+    INSERT INTO imgs VALUES (custno_sequence.currval, #{imgname1}, #{imgname2}, #{imgname3}, #{imgname4}, #{imgname5}, #{imgname6})
+    ]]>
+	</insert>
+
+	<select id="getProfileList" resultMap="profileResultMap">
+	<![CDATA[
+	SELECT u.custno, u.custname, u.sex, u.custrank, u.custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+       	   END AS custage, o.zodiac, o.mbti, o.sns, o.job, im.imgname1
+	FROM users u
+	INNER JOIN options o ON u.custno = o.users_custno
+	INNER JOIN interests i ON u.custno = i.users_custno
+	INNER JOIN imgs im ON u.custno = im.users_custno
+	WHERE u.custno = #{custno}
+	]]>
+	</select>
+
+	<insert id="insertLike">
+  	<![CDATA[
+    	insert into likes values (#{partnerno},#{custno})
+ 	]]>
+	</insert>
+	
+	<insert id="insertDisLike">
+  	<![CDATA[
+    	insert into dislikes values (#{custno},#{partnerno})
+ 	]]>
+	</insert>
+
+</mapper>

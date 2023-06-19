@@ -1,0 +1,162 @@
+@charset 'UTF-8';
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+	display: block;
+}
+
+ul {
+	list-style: none;
+}
+
+body {
+	width: 100vw;
+	height: 100vh;
+}
+
+header, main, footer {
+	width: 100%;
+}
+
+/*****************************************/
+header {
+	height: 100px;
+	line-height: 100px;
+}
+
+header h1 {
+	float: left;
+	width: 300px;
+	margin-left: 100px;
+	text-align: center;
+}
+
+h1 img {
+	display: block;
+	padding-top: 20px;
+	padding-left: 100px;
+	box-sizing: content-box;
+}
+
+/*****************************************/
+header nav {
+	float: right;
+	width: 740px;
+	height: 100%;
+	font-size: 1.2em;
+}
+
+
+header nav ul li {
+	float: left;
+	text-align: center;
+	padding: 0 50px;
+	font-weight: 500;
+	color: #808080;
+}
+
+li i {
+	padding-top: 35px;
+	color: #57abff;
+	cursor: pointer;
+}
+
+.dropdown {
+	cursor: pointer;
+	float: left;
+	/* text-align: center; */
+	padding: 0 30px;
+	font-weight: 500;
+	color: #808080;
+}
+
+.dropdown-content {
+	width: 200px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.192);
+	display: none;
+}
+
+.dropdown-content a {
+	display: block;
+	padding: 10px;
+	text-align: center;
+}
+
+.dropdown-content a:hover {
+	background-color: #ececec
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.btn3 {
+	width: 70px;
+	height: 40px;
+	border-radius: 5px;
+	background-color: #ff7dc8;
+	color: #fff;
+	border: none;
+	transition: all 0.2s;
+	font-size: 1em;
+	text-align: center;
+}
+
+.btn3:hover {
+	cursor: pointer;
+	background: #ff53b6;
+	transform: scale(1.05);
+}
+
+header nav input[type=submit] {
+	background: rgba(0, 0, 0, 0);
+	border: none;
+	font-size: 1em;
+	font-weight: 500;
+}
+
+header nav .fas {
+	font-size: 1.5em;
+}
+
+header nav ul li a:hover, header nav input[type=submit]:hover {
+	color: black;
+	cursor: pointer;
+}
+
+/*****************************************/
+footer {
+	margin: 0 auto;
+	width: 100%;
+	height: 300px;
+	background: #ffffff;
+	color: #62b0ff;
+	text-align: center;
+}
+
+footer h3 {
+	padding: 15px;
+	margin: 0 auto;
+	margin-top: 50px;
+	width: 200px;
+}
+
+footer .footermenu {
+	width: 800px;
+	height: 50px;
+	margin: 15px auto;
+}
+
+footer .footermenu li {
+	float: left;
+	width: 20%;
+	line-height: 50px;
+	text-align: center;
+}

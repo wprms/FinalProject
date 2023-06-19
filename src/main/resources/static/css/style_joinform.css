@@ -1,0 +1,91 @@
+@charset 'UTF-8';
+
+.support {
+	width: 100%;
+	min-height: 700px;
+}
+
+.menu_wrap {
+	width: 850px;
+	margin: 0 auto;
+	margin-bottom: 25px;
+}
+
+.menu_wrap h2 {
+	margin-bottom: 25px;
+}
+
+.menu_wrap section {
+	padding: 20px;
+	border: 1px solid #EEE;
+}
+
+.menu_wrap form {
+	width: 100%;
+	margin: 0 auto;
+	border: 2px solid #EEE;
+	padding: 20px;
+}
+
+.menu_wrap form p {
+	padding: 20px 10px;
+}
+
+.menu_wrap form p:last-child {
+	text-align: center;
+}
+
+.menu_wrap form span {
+	display: inline-block;
+	width: 100px;
+	text-align: center;
+}
+
+.menu_wrap form input {
+	padding: 5px;
+	height: 30px;
+	line-height: 30px;
+}
+
+.menu_wrap form input[type="file"] {
+	display: none;
+}
+
+.menu_wrap form select {
+	padding: 5px;
+	height: 30px;
+	line-height: 30px;
+}
+
+/*******************/
+hr {
+	margin-bottom: 30px;
+}
+
+form img {
+	width: 200px;
+	height: 200px;
+}
+.upload{
+	width:50px;
+	text-align:center;
+	border-radius:3px;
+	background:#ff53b6;
+	color:#FFF;
+	cursor:pointer;
+}
+
+.real-upload {
+	display: none;
+}
+
+.image-preview {
+	width: 80%;
+	height: 450px;
+	margin:0 auto;
+	display: flex;
+	flex-wrap: wrap;
+	border:1px solid #AAA;
+	margin-bottom:30px;
+	padding:20px;
+}

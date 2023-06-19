@@ -1,0 +1,50 @@
+@charset "UTF-8";
+
+header {
+	color: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+header .logo img{
+	max-height: 100%;
+}
+
+header .logo img {
+	max-height: 80px;
+	max-width: 100%;
+}
+
+header .menu img {
+	max-height: 50px;
+}
+
+.menu ul {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.menu li {
+	margin: 0 10px;
+}
+
+.dropdown-content {
+	display: none;
+  }
+  
+  .dropdown .active {
+	display: block;
+  }
+
+
+
+.company-logo {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 12px;
+ }

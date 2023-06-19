@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="edu.global.friend.mapper.SearchMapper">
+
+	<resultMap id="imgMap" type="ImgVO">
+		<result property="custno" column="custno" />
+		<result property="imgname1" column="imgname1" />
+		<result property="imgname2" column="imgname2" />
+		<result property="imgname3" column="imgname3" />
+		<result property="imgname4" column="imgname4" />
+		<result property="imgname5" column="imgname5" />
+		<result property="imgname6" column="imgname6" />
+	</resultMap> 
+
+	<resultMap id="userMap" type="UserVO">
+		<id property="custno" column="custno" />
+		<result property="custid" column="custid" />
+		<result property="custpw" column="custpw" />
+		<result property="custemail" column="custemail" />
+		<result property="custname" column="custname" />
+		<result property="custbirth" column="custbirth" />
+		<result property="custloc" column="custloc" />
+		<result property="custrank" column="custrank" />
+		<result property="custduration" column="custduration" />
+		<result property="custage" column="custage" />
+		<result property="sex" column="sex" />
+		<collection property="imgList" resultMap="imgMap" />
+	</resultMap>
+
+	<!-- 탐색 리스트 조회 -->
+	<select id="getSearchList" resultMap="userMap">
+	 <![CDATA[
+		SELECT U.CUSTNO,U.CUSTNAME, custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+      	 END AS custage, U.CUSTLOC, I.imgname1 FROM USERS U, IMGS I WHERE U.CUSTNO = I.USERS_CUSTNO
+      	 AND U.CUSTNO NOT IN ( SELECT partnerno from dislikes where users_custno = #{custno})
+      	 AND U.CUSTNO NOT IN ( SELECT USERS_CUSTNO from likes where partnerno = #{custno})
+      	 AND U.CUSTNO != #{custno}
+		 ]]>
+	</select>
+	
+	<select id="getSexSearchList" resultMap="userMap">
+	 <![CDATA[
+		SELECT U.CUSTNO,U.CUSTNAME, custbirth, CASE
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '19'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+           WHEN substr(to_char(custbirth,'yyyymmdd'), 1, 2) = '20'
+               THEN TO_NUMBER(TO_CHAR(SYSDATE, 'YYYY')) - TO_NUMBER(substr(to_char(custbirth,'yyyymmdd'), 1, 4)) + 1
+      	 END AS custage, U.CUSTLOC, I.imgname1 FROM USERS U, IMGS I WHERE U.CUSTNO = I.USERS_CUSTNO
+      	 AND U.CUSTNO NOT IN ( SELECT partnerno from dislikes where users_custno = #{custno})
+      	 AND U.CUSTNO NOT IN ( SELECT USERS_CUSTNO from likes where partnerno = #{custno})
+      	 AND U.CUSTNO != #{custno}
+      	 AND U.SEX NOT IN ( SELECT sex from USERS U where custno = #{custno})
+		 ]]>
+	</select>
+
+</mapper>
